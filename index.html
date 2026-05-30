@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nard's Coffee Lounge — Where Every Sip Tells a Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --espresso: #1C0A00;
+    --roast: #3B1F0E;
+    --caramel: #C68B3A;
+    --latte: #E8C99A;
+    --cream: #FAF4EB;
+    --text: #3B2A1A;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 20px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(28,10,0,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 2.2rem; color: var(--caramel);
+    letter-spacing: 1px;
+  }
+  nav ul { list-style: none; display: flex; gap: 36px; }
+  nav ul a {
+    text-decoration: none; color: rgba(255,255,255,0.75);
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 500; transition: color 0.3s;
+  }
+  nav ul a:hover { color: var(--caramel); }
+  .nav-btn {
+    background: var(--caramel); color: #fff; border: none;
+    padding: 11px 26px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px; transition: background 0.3s;
+  }
+  .nav-btn:hover { background: var(--roast); }
+
+  /* HERO */
+  .hero {
+    height: 100vh; position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1776983585302-21fbf91e5a6f?ixlib=rb-4.1.0&w=1600&q=80') center/cover no-repeat;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(28,10,0,0.88) 0%, rgba(28,10,0,0.5) 60%, rgba(28,10,0,0.1) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 80px; max-width: 680px;
+    animation: fadeUp 1s ease forwards;
+  }
+  .hero-tag {
+    font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--caramel); margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    color: #fff; line-height: 1.1; margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: var(--latte); }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.75);
+    line-height: 1.8; margin-bottom: 48px; font-weight: 300;
+    max-width: 480px;
+  }
+  .hero-btns { display: flex; gap: 16px; }
+  .btn-gold {
+    background: var(--caramel); color: #fff; border: none;
+    padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; border-radius: 2px;
+  }
+  .btn-gold:hover { background: #fff; color: var(--espresso); transform: translateY(-2px); }
+  .btn-ghost {
+    background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; border-radius: 2px;
+  }
+  .btn-ghost:hover { border-color: var(--caramel); color: var(--caramel); }
+
+  /* VIBE STRIP */
+  .vibe-strip {
+    background: var(--espresso);
+    display: flex; justify-content: center; gap: 80px;
+    padding: 40px 60px; flex-wrap: wrap;
+  }
+  .vibe-item {
+    display: flex; align-items: center; gap: 14px;
+    color: rgba(255,255,255,0.7);
+  }
+  .vibe-icon { font-size: 1.6rem; }
+  .vibe-text { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ABOUT */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+  }
+  .about-img {
+    position: relative; overflow: hidden;
+  }
+  .about-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .about-img:hover img { transform: scale(1.05); }
+  .about-content {
+    background: var(--roast);
+    padding: 80px 70px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-tag {
+    font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--caramel); margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: #fff; line-height: 1.2; margin-bottom: 28px;
+  }
+  .section-title em { font-style: italic; color: var(--latte); }
+  .about-text {
+    font-size: 1rem; color: rgba(255,255,255,0.7);
+    line-height: 1.9; font-weight: 300; margin-bottom: 40px;
+  }
+  .divider { width: 50px; height: 2px; background: var(--caramel); margin-bottom: 32px; }
+
+  /* MENU */
+  .menu { padding: 120px 60px; background: var(--cream); }
+  .menu-header { text-align: center; margin-bottom: 80px; }
+  .menu-header .section-title { color: var(--espresso); }
+  .menu-header .divider { margin: 24px auto; }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .menu-card {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: all 0.4s;
+  }
+  .menu-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
+  .menu-card-img {
+    height: 220px; overflow: hidden;
+  }
+  .menu-card-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s;
+  }
+  .menu-card:hover .menu-card-img img { transform: scale(1.08); }
+  .menu-card-body { padding: 32px 28px; }
+  .menu-card-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem; color: var(--espresso); margin-bottom: 10px;
+  }
+  .menu-card-desc {
+    font-size: 0.88rem; color: #888; line-height: 1.7; margin-bottom: 20px;
+  }
+  .menu-card-price {
+    font-size: 1rem; font-weight: 500; color: var(--caramel);
+  }
+
+  /* GALLERY */
+  .gallery { background: var(--espresso); padding: 120px 0 0; }
+  .gallery-header { text-align: center; margin-bottom: 60px; padding: 0 60px; }
+  .gallery-header .section-title { color: #fff; }
+  .gallery-header .divider { margin: 24px auto; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 280px 280px;
+  }
+  .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item:first-child { grid-column: 1 / 3; grid-row: 1 / 3; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.85);
+  }
+  .gallery-item:hover img { transform: scale(1.08); filter: brightness(1); }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--cream); padding: 120px 60px; }
+  .testimonials .menu-header .section-title { color: var(--espresso); }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    margin-top: 60px;
+  }
+  .testimonial {
+    background: #fff; padding: 48px 36px;
+    border-left: 3px solid var(--caramel);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+  }
+  .testimonial:hover { transform: translateY(-4px); }
+  .quote {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 4rem; color: var(--caramel);
+    line-height: 0.5; margin-bottom: 20px; display: block;
+  }
+  .testimonial-text {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.98rem; font-style: italic;
+    color: var(--text); line-height: 1.8; margin-bottom: 28px;
+  }
+  .testimonial-name {
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--caramel); font-weight: 500;
+  }
+
+  /* VISIT */
+  .visit {
+    background: var(--roast);
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .visit-img { position: relative; min-height: 500px; overflow: hidden; }
+  .visit-img img { width: 100%; height: 100%; object-fit: cover; }
+  .visit-content {
+    padding: 80px 70px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .visit-content .section-title { color: #fff; margin-bottom: 40px; }
+  .visit-info { margin-bottom: 20px; }
+  .visit-label {
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--caramel); margin-bottom: 8px;
+  }
+  .visit-value {
+    font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.6;
+  }
+  .visit-btn {
+    margin-top: 40px;
+    background: var(--caramel); color: #fff; border: none;
+    padding: 16px 36px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; border-radius: 2px;
+    align-self: flex-start;
+  }
+  .visit-btn:hover { background: #fff; color: var(--espresso); }
+
+  /* FOOTER */
+  footer {
+    background: var(--espresso);
+    padding: 60px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px;
+    border-top: 1px solid rgba(198,139,58,0.2);
+  }
+  .footer-logo { font-family: 'Pinyon Script', cursive; font-size: 2.8rem; color: var(--caramel); }
+  .footer-desc {
+    font-size: 0.88rem; color: rgba(255,255,255,0.45);
+    line-height: 1.8; margin-top: 16px; max-width: 280px;
+  }
+  .footer-col h4 {
+    font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--caramel); margin-bottom: 24px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul a {
+    text-decoration: none; font-size: 0.9rem;
+    color: rgba(255,255,255,0.5); transition: color 0.3s;
+  }
+  .footer-col ul a:hover { color: var(--caramel); }
+  .footer-bottom {
+    background: var(--espresso); padding: 20px 60px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    text-align: center; font-size: 0.7rem;
+    color: rgba(255,255,255,0.25); letter-spacing: 1px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero-content { padding: 0 24px; }
+    .about, .visit { grid-template-columns: 1fr; }
+    .about-img { height: 300px; }
+    .about-content, .visit-content { padding: 60px 24px; }
+    .menu { padding: 80px 24px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item:first-child { grid-column: 1 / 3; grid-row: auto; height: 250px; }
+    .testimonials { padding: 80px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; padding: 60px 24px; }
+    .footer-bottom { padding: 20px 24px; }
+    .vibe-strip { gap: 32px; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Nard's</div>
+  <ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+  </ul>
+  <button class="nav-btn">Reserve a Spot</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">☕ Lagos' Finest Coffee Lounge</p>
+    <h1 class="hero-title">Where Every<br>Sip Tells a <em>Story</em></h1>
+    <p class="hero-sub">Step into Nard's Coffee Lounge — a warm, welcoming space where great coffee, good food, and good company come together.</p>
+    <div class="hero-btns">
+      <button class="btn-gold">See Our Menu</button>
+      <button class="btn-ghost">Find Us</button>
+    </div>
+  </div>
+</section>
+
+<!-- VIBE STRIP -->
+<div class="vibe-strip">
+  <div class="vibe-item">
+    <span class="vibe-icon">☕</span>
+    <span class="vibe-text">Premium Coffee</span>
+  </div>
+  <div class="vibe-item">
+    <span class="vibe-icon">🍰</span>
+    <span class="vibe-text">Fresh Pastries</span>
+  </div>
+  <div class="vibe-item">
+    <span class="vibe-icon">📶</span>
+    <span class="vibe-text">Free WiFi</span>
+  </div>
+  <div class="vibe-item">
+    <span class="vibe-icon">🎵</span>
+    <span class="vibe-text">Live Music Fridays</span>
+  </div>
+  <div class="vibe-item">
+    <span class="vibe-icon">🕐</span>
+    <span class="vibe-text">Open 7am – 10pm</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-img">
+    <img src="https://images.unsplash.com/photo-1742134516280-d62ad935b951?ixlib=rb-4.1.0&w=900&q=80" alt="Inside Nard's Coffee Lounge">
+  </div>
+  <div class="about-content">
+    <p class="section-tag">✦ Our Story</p>
+    <div class="divider"></div>
+    <h2 class="section-title">More Than Just <em>Coffee</em></h2>
+    <p class="about-text">Nard's Coffee Lounge was born from a simple belief — that the best conversations happen over a great cup of coffee. We source our beans carefully, brew with love, and serve every cup with warmth.<br><br>Whether you're catching up with friends, working remotely, or just taking a quiet moment for yourself — Nard's is your place in Lagos.</p>
+    <button class="btn-gold">Our Full Story</button>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header">
+    <p class="section-tag">✦ What We Serve</p>
+    <h2 class="section-title" style="color:var(--espresso)">Our <em style="color:var(--caramel)">Signature</em> Menu</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1550840205-04ace4aa8495?ixlib=rb-4.1.0&w=600&q=80" alt="Specialty Coffee">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Signature Espresso Blend</h3>
+        <p class="menu-card-desc">Rich, smooth espresso made from our house-roasted beans. Bold flavour, perfect crema every time.</p>
+        <span class="menu-card-price">₦2,500</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1569706971632-fd1fdb494764?ixlib=rb-4.1.0&w=600&q=80" alt="Latte">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Nard's Caramel Latte</h3>
+        <p class="menu-card-desc">Silky steamed milk, double espresso, and our homemade caramel drizzle. A customer favourite.</p>
+        <span class="menu-card-price">₦3,200</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1594564190328-0bed16a89837?ixlib=rb-4.1.0&w=600&q=80" alt="Food">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">All-Day Brunch Plate</h3>
+        <p class="menu-card-desc">Eggs, toast, grilled veggies, and your choice of protein. The perfect fuel for a productive day.</p>
+        <span class="menu-card-price">₦6,500</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1742134516280-d62ad935b951?ixlib=rb-4.1.0&w=600&q=80" alt="Dining">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Lounge Dinner Special</h3>
+        <p class="menu-card-desc">Evening meals crafted fresh daily. Ask our staff for today's special — always something exciting.</p>
+        <span class="menu-card-price">From ₦8,000</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1779960965516-4e3a28837108?ixlib=rb-4.1.0&w=600&q=80" alt="Cocktails">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Mocktail & Cocktail Bar</h3>
+        <p class="menu-card-desc">Creative cocktails and refreshing mocktails crafted by our in-house mixologist. Perfect for evenings.</p>
+        <span class="menu-card-price">From ₦4,000</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="https://images.unsplash.com/photo-1739300293397-124ebd1422aa?ixlib=rb-4.1.0&w=600&q=80" alt="Work lounge">
+      </div>
+      <div class="menu-card-body">
+        <h3 class="menu-card-name">Work & Relax Package</h3>
+        <p class="menu-card-desc">Unlimited WiFi, a quiet corner table, and your choice of 2 drinks. Perfect for remote workers.</p>
+        <span class="menu-card-price">₦5,000 / day</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <p class="section-tag">✦ The Atmosphere</p>
+    <h2 class="section-title" style="color:#fff">Feel the <em style="color:var(--latte)">Nard's Vibe</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1594564190328-0bed16a89837?ixlib=rb-4.1.0&w=900&q=80" alt="Dining at Nard's">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1776983585302-21fbf91e5a6f?ixlib=rb-4.1.0&w=600&q=80" alt="Lounge bar">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1550840205-04ace4aa8495?ixlib=rb-4.1.0&w=600&q=80" alt="Coffee">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1779960965516-4e3a28837108?ixlib=rb-4.1.0&w=600&q=80" alt="Cocktails">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1777138653711-f59e274de4e4?ixlib=rb-4.1.0&w=600&q=80" alt="Window seat">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1739300293397-124ebd1422aa?ixlib=rb-4.1.0&w=600&q=80" alt="Work space">
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="menu-header">
+    <p class="section-tag">✦ Guest Love</p>
+    <h2 class="section-title" style="color:var(--espresso)">What People Are <em style="color:var(--caramel)">Saying</em></h2>
+    <div class="divider" style="margin:24px auto"></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <span class="quote">"</span>
+      <p class="testimonial-text">Nard's is my second office. The WiFi is fast, the coffee is perfect, and the vibes are immaculate. I come here at least 3 times a week!</p>
+      <p class="testimonial-name">— Tunde O., Freelance Designer</p>
+    </div>
+    <div class="testimonial">
+      <span class="quote">"</span>
+      <p class="testimonial-text">Had my birthday dinner here and it was absolutely amazing. The food, the cocktails, the atmosphere — everything was on point. 10/10!</p>
+      <p class="testimonial-name">— Adaeze N., Lekki</p>
+    </div>
+    <div class="testimonial">
+      <span class="quote">"</span>
+      <p class="testimonial-text">Finally a coffee lounge in Lagos that actually knows how to make good coffee. The caramel latte is to die for. My new favourite spot!</p>
+      <p class="testimonial-name">— Emeka B., Victoria Island</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="visit-img">
+    <img src="https://images.unsplash.com/photo-1742134516280-d62ad935b951?ixlib=rb-4.1.0&w=900&q=80" alt="Inside Nard's Coffee Lounge">
+  </div>
+  <div class="visit-content">
+    <p class="section-tag">✦ Come See Us</p>
+    <h2 class="section-title">Find Your <em>Perfect Spot</em></h2>
+    <div class="visit-info">
+      <p class="visit-label">Address</p>
+      <p class="visit-value">22 Coffee Lane, Victoria Island<br>Lagos, Nigeria</p>
+    </div>
+    <div class="visit-info">
+      <p class="visit-label">Opening Hours</p>
+      <p class="visit-value">Monday – Friday: 7am – 10pm<br>Saturday – Sunday: 8am – 11pm</p>
+    </div>
+    <div class="visit-info">
+      <p class="visit-label">Contact</p>
+      <p class="visit-value">📞 +234 800 000 0001<br>📱 WhatsApp: +234 800 000 0001</p>
+    </div>
+    <button class="visit-btn">Get Directions</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Nard's</div>
+    <p class="footer-desc">Your favourite coffee lounge in the heart of Lagos. Great coffee, great food, great company — always.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Menu</h4>
+    <ul>
+      <li><a href="#">Coffee & Drinks</a></li>
+      <li><a href="#">Brunch</a></li>
+      <li><a href="#">Dinner</a></li>
+      <li><a href="#">Cocktails</a></li>
+      <li><a href="#">Pastries</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Connect</h4>
+    <ul>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">WhatsApp</a></li>
+      <li><a href="#">TikTok</a></li>
+      <li><a href="#">Facebook</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 Nard's Coffee Lounge. All rights reserved. Built with ❤️ in Lagos.
+</div>
+
+</body>
+</html>
